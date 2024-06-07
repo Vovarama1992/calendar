@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    
+    "format": "prettier --write app",
+    "lint": "eslint . --ext .jsx,.js,.tsx,.ts --fix"
   },
   "dependencies": {
     "next": "14.2.3",
@@ -27,7 +29,6 @@
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-boundaries": "^4.2.1",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-perfectionist": "^2.10.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
