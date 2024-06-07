@@ -1,0 +1,154 @@
+.container {
+  
+  position: absolute;
+  left: 1vw;
+  top: 1vh;
+  width: 78%;
+  height: 98%;
+}
+
+
+.selector {
+  height: 50px;
+  margin-top: 10px;
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  
+}
+.calendar {
+  
+  margin-top: 15px;
+  width: 84%;
+  height: 75%;
+  margin-left: 8%;
+  
+}
+.calendar button {
+  width: 80px;
+  height: 80px;
+  border-radius: 7px;
+  border: none;
+}
+
+.td {
+  text-align: center;
+}
+
+.selector select {
+  width: 12%;
+  outline: none;
+  border-radius: 8px;
+  padding-left: 5px;
+}
+
+.todo {
+  position: absolute;
+  width: 30%;
+  height: 90%;
+  left: 35%;
+  top: 2%;
+  background: yellow;
+}
+
+.closer {
+  position: absolute;
+  font-size: 15px;
+  right: 1px;
+  top: 1px;
+  background: green;
+  
+}
+.form {
+  margin-left: 15%;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+}
+.form input {
+  outline: none;
+  width: 90%;
+  border-radius: 5px;
+  
+}
+.todoItem {
+  height: auto;
+  width: 98%;
+  
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.todoItem label {
+  width: 62%;
+  height: auto;
+  
+  flex-shrink: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.changeInput {
+  width: 300px;
+  border-radius: 8px;
+}
+.changeZone {
+  display: flex;
+  flex-direction: row;
+}
+.changeZone input {
+  width: 80%;
+}
+.todoItem input {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  
+}
+.changer {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: blue;
+  flex-shrink: 1;
+}
+.todoContent {
+ 
+  position: relative;
+  left: 5%;
+  top: 5%;
+  
+  height: auto;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.todoContent input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+}
+
+@media (max-width: 968px) {
+  .selector select {
+    width: 20%;
+  }
+  .calendar {
+    width: 98%;
+    margin-left: 1%;
+  }
+  .todo {
+    width: 55%;
+  }
+  .closer {
+    width: 19px;
+    height: 19px;
+  }
+}
