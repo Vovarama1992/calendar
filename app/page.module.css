@@ -30,6 +30,10 @@
 
 .td {
   text-align: center;
+  
+}
+.td button {
+  border: 1px solid rgb(184, 184, 53);
 }
 
 .selector select {
@@ -41,37 +45,49 @@
 
 .todo {
   position: absolute;
-  width: 30%;
+  width: 50%;
   height: 90%;
   left: 35%;
   top: 2%;
-  background: yellow;
+  z-index: 9999;
+  height: auto;
+  background: rgb(184, 184, 53);
+  border: 1px solid rgb(184, 184, 53);
+  overflow: hidden;
+  border-radius: 15px;
+  min-height: 80%;
+  
+  
 }
 
 .closer {
   position: absolute;
   font-size: 15px;
-  right: 1px;
-  top: 1px;
-  background: green;
+  color: rgb(184, 184, 53);
+  right: -1px;
+  top: -1px;
+  background: white;
+  
 }
 .form {
-  margin-left: 15%;
-  margin-bottom: 14px;
+  margin: 14px auto;
+  width: 70%;
   display: flex;
   gap: 15px;
   font-size: 20px;
+  
 }
 .form input {
   outline: none;
-  width: 90%;
+  width: 80%;
   border-radius: 5px;
 }
 .todoItem {
   height: auto;
   width: 98%;
-
-  font-size: 20px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid black;
+  font-size: 18px;
   margin-bottom: 6px;
   display: flex;
   flex-direction: row;
@@ -80,9 +96,9 @@
   overflow-wrap: break-word;
 }
 .todoItem label {
-  width: 62%;
+  width: 77%;
   height: auto;
-
+  
   flex-shrink: 1;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -105,9 +121,12 @@
 }
 .changer {
   display: flex;
+  
   justify-content: center;
   align-items: center;
-  background: blue;
+  font-size: 40px;
+  color: rgb(78, 80, 40);
+  background: rgb(255, 255, 255);
   flex-shrink: 1;
 }
 .todoContent {
@@ -125,6 +144,10 @@
 .todoContent input[type='checkbox']:checked + label {
   text-decoration: line-through;
 }
+.empter {
+  margin: 20px auto 0;
+  
+}
 
 @media (max-width: 968px) {
   .selector select {
@@ -135,10 +158,18 @@
     margin-left: 1%;
   }
   .todo {
-    width: 55%;
+    width: 90vw;
+    left: 2vw;
+  }
+  .form {
+    width: 90%;
+  }
+  .todoItem {
+    font-size: 15px;
   }
   .closer {
     width: 19px;
     height: 19px;
   }
+ 
 }

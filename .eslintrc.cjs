@@ -15,12 +15,12 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:prettier/recommended',
-    'plugin:perfectionist/recommended-natural',
+    // 'plugin:perfectionist/recommended-natural', // Убрано использование perfectionist
     'plugin:boundaries/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', '@typescript-eslint', 'import', 'perfectionist', 'boundaries'],
+  plugins: ['react-refresh', '@typescript-eslint', 'import', 'boundaries'],
   rules: {
     'react-refresh/only-export-components': 0,
     'arrow-parens': 'off',
@@ -51,32 +51,7 @@ module.exports = {
         prev: ['const', 'let', 'var'],
       },
     ],
-    'perfectionist/sort-imports': [
-      'error',
-      {
-        'custom-groups': {
-          type: {
-            react: 'react',
-          },
-          value: {
-            react: ['react', 'react-*'],
-          },
-        },
-        groups: [
-          'type',
-          'react',
-          'builtin',
-          'external',
-          'internal-type',
-          'internal',
-          'side-effect',
-          'style',
-        ],
-        'newlines-between': 'always',
-        order: 'asc',
-        type: 'natural',
-      },
-    ],
+    // Удалено правило perfectionist/sort-imports
     'prefer-const': 'error',
     'react/display-name': 'off',
     'react/jsx-boolean-value': ['error'],
@@ -101,7 +76,6 @@ module.exports = {
         alwaysTryTypes: true,
       },
     },
-
     react: {
       version: 'detect',
     },
