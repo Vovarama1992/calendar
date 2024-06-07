@@ -7,16 +7,16 @@ const changeInput = { width: '300px' }
 const changer = { width: 'auto', height: '20px', marginLeft: '5px', background: 'transparent' }
 
 export default function TodoListModal({ day, month, year, close, open }: TodoProps) {
+    const localStorageKey = `todo_${year}_${month}_${day}`
   const [nextId, setNext] = useState(0)
   const [input, turnInput] = useState(false)
   const [selectedId, setSelect] = useState<number | null>(null)
   const [todos, dispatch] = useReducer(todoReducer, [], initTodos)
-  const [name, setName] = useState('Unknown')
-  const yourname = prompt('Enter your name') as string
-  useEffect(() => {
-    setName(yourname)
-  }, [])
-  const localStorageKey = `todo_${year}_${month}_${day}_${name}`
+  const [name, setName] = useState<string | null>(null);
+ 
+  
+  
+  
   const visible = open ? { opacity: '1', transition: 'opacity 0.6s ease' } : {}
   function initTodos() {
     const storedTodos = localStorage.getItem(localStorageKey)

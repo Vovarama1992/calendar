@@ -16,7 +16,7 @@ export async function isDayOff(year: number, month: number, day: number) {
     return num < 10 ? `0${num}` : `${num}`
   }
 
-  const formattedMonth = formatNumber(month + 1) // Добавляем 1 к месяцу, так как JavaScript Date месяц начинается с 0
+  const formattedMonth = formatNumber(month + 1) 
   const formattedDay = formatNumber(day)
 
   const date = `${year}-${formattedMonth}-${formattedDay}`
