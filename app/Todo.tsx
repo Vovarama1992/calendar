@@ -116,6 +116,7 @@ export default function TodoListModal({ day, month, year, close, open }: TodoPro
                   type="text"
                   name="newvalue"
                 />
+                <button style={{height: '40px', width: 'auto', marginLeft: '10px'}} type='submit'>Ok</button>
               </form>
             ) : (
               <>
