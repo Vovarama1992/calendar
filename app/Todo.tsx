@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useEffect } from 'react'
-import Image from 'next/image';
+import Image from 'next/image'
 import { todoReducer } from './lib/functions'
 import { Todo, TodoProps } from './lib/defs'
 import styles from './page.module.css'
@@ -7,14 +7,17 @@ const changeInput = { width: '300px' }
 const changer = { width: 'auto', height: '20px', marginLeft: '5px', background: 'transparent' }
 
 export default function TodoListModal({ day, month, year, close, open }: TodoProps) {
-  const localStorageKey = `todo_${year}_${month}_${day}`
   const [nextId, setNext] = useState(0)
   const [input, turnInput] = useState(false)
   const [selectedId, setSelect] = useState<number | null>(null)
   const [todos, dispatch] = useReducer(todoReducer, [], initTodos)
-  const visible = open
-  ? { opacity: '1', transition: 'opacity 0.6s ease' }
-  : { };
+  const [name, setName] = useState('Unknown')
+  const yourname = prompt('Enter your name') as string
+  useEffect(() => {
+    setName(yourname)
+  }, [])
+  const localStorageKey = `todo_${year}_${month}_${day}_${name}`
+  const visible = open ? { opacity: '1', transition: 'opacity 0.6s ease' } : {}
   function initTodos() {
     const storedTodos = localStorage.getItem(localStorageKey)
     return storedTodos ? JSON.parse(storedTodos) : []
@@ -64,9 +67,9 @@ export default function TodoListModal({ day, month, year, close, open }: TodoPro
   const handleAddSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    const newTodoText = formData.get('newtodo') as string;
+    const newTodoText = formData.get('newtodo') as string
     if (!newTodoText) {
-      alert('type something');
+      alert('type something')
     }
     if (newTodoText.trim()) {
       addTodo(newTodoText)
@@ -100,8 +103,9 @@ export default function TodoListModal({ day, month, year, close, open }: TodoPro
             +
           </button>
         </form>
-        {todos.length == 0 && <h1 className={styles.empter}>
-          TodoList is empty right now. Add something  </h1>}
+        {todos.length == 0 && (
+          <h1 className={styles.empter}>TodoList is empty right now. Add something </h1>
+        )}
         {todos.map((todo: Todo, index: number) => (
           <div className={styles.todoItem} key={index}>
             {input && todo.id == selectedId ? (
@@ -122,15 +126,11 @@ export default function TodoListModal({ day, month, year, close, open }: TodoPro
                   checked={todo.completed}
                 />
                 <label htmlFor={`todo-${todo.id}`}>{todo.text}</label>
-                <button onClick={() => onTurn(todo.id)}  style={changer}>
-                <Image src='/pencil.png' width={25} height={25} alt="Pencil Icon" />
+                <button onClick={() => onTurn(todo.id)} style={changer}>
+                  <Image src="/pencil.png" width={25} height={25} alt="Pencil Icon" />
                 </button>
-                <button
-                  onClick={() => deleteTodo(todo.id)}
-                  
-                  style={changer}
-                >
-                  <Image src='/trash.png' width={25} height={25} alt="Trash Icon" />
+                <button onClick={() => deleteTodo(todo.id)} style={changer}>
+                  <Image src="/trash.png" width={25} height={25} alt="Trash Icon" />
                 </button>
               </>
             )}
@@ -138,7 +138,11 @@ export default function TodoListModal({ day, month, year, close, open }: TodoPro
         ))}
       </div>
 
-      <button className={styles.closer} style={{ width: '42px', height: '42px', borderRadius: '6px' }} onClick={close}>
+      <button
+        className={styles.closer}
+        style={{ width: '42px', height: '42px', borderRadius: '6px' }}
+        onClick={close}
+      >
         X
       </button>
     </div>

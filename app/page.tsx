@@ -10,28 +10,28 @@ export default function Home() {
   const [month, setMonth] = useState(5)
   const [open, setOpen] = useState(false)
   const [day, setDay] = useState(1)
-  const [holidays, setHolidays] = useState<number[]>([]);
+  const [holidays, setHolidays] = useState<number[]>([])
   const days = getDays(year, month)
   useEffect(() => {
     const fetchHolidays = async () => {
-      const promises = days.map(dayObj => isDayOff(year, month, dayObj.date));
-      const results = await Promise.all(promises);
-      const newHolidays = days.filter((dayObj, index) => results[index]);
-      setHolidays(newHolidays.map(dayObj => dayObj.date));
-    };
-    fetchHolidays();
-  }, [year, month, days]);
+      const promises = days.map(dayObj => isDayOff(year, month, dayObj.date))
+      const results = await Promise.all(promises)
+      const newHolidays = days.filter((dayObj, index) => results[index])
+      setHolidays(newHolidays.map(dayObj => dayObj.date))
+    }
+    fetchHolidays()
+  }, [year, month, days])
   const shift = days[0].dayOfWeek
   const hideForModal = {
     opacity: open ? '0' : '1',
-    
-    transition: 'opacity 0.3s ease' // Плавный переход прозрачности
-  };
+
+    transition: 'opacity 0.3s ease', // Плавный переход прозрачности
+  }
   function openModal(day: number) {
     setOpen(true)
     setDay(day)
   }
-  const dayOff = {'color': 'red'};
+  const dayOff = { color: 'red' }
   return (
     <main className={styles.container}>
       <div className={styles.selector} style={hideForModal}>
@@ -39,7 +39,12 @@ export default function Home() {
           <option value={2024}>2024</option>
           <option value={2025}>2025</option>
         </select>
-        <select name="month" value={month} style={hideForModal} onChange={e => setMonth(Number(e.target.value))}>
+        <select
+          name="month"
+          value={month}
+          style={hideForModal}
+          onChange={e => setMonth(Number(e.target.value))}
+        >
           {months.map(m => (
             <option key={m.value} value={m.value}>
               {m.name}
@@ -69,11 +74,15 @@ export default function Home() {
                     } else {
                       return (
                         <td className={styles.td} key={dayIndex}>
-                          <button style={hideForModal}  className={styles.todoButton} onClick={() => openModal(dayNumber)}>
-                          <span style={holidays.includes(dayNumber) ? dayOff : {}}>
-                                     {dayNumber}
-                           </span>
-                            </button>
+                          <button
+                            style={hideForModal}
+                            className={styles.todoButton}
+                            onClick={() => openModal(dayNumber)}
+                          >
+                            <span style={holidays.includes(dayNumber) ? dayOff : {}}>
+                              {dayNumber}
+                            </span>
+                          </button>
                           {open && (
                             <TodoListModal
                               close={() => setOpen(false)}

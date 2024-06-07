@@ -30,7 +30,6 @@
 
 .td {
   text-align: center;
-  
 }
 .td button {
   border: 1px solid rgb(184, 184, 53);
@@ -56,8 +55,6 @@
   overflow: hidden;
   border-radius: 15px;
   min-height: 80%;
-  
-  
 }
 
 .closer {
@@ -67,7 +64,6 @@
   right: -1px;
   top: -1px;
   background: white;
-  
 }
 .form {
   margin: 14px auto;
@@ -75,7 +71,6 @@
   display: flex;
   gap: 15px;
   font-size: 20px;
-  
 }
 .form input {
   outline: none;
@@ -98,7 +93,7 @@
 .todoItem label {
   width: 77%;
   height: auto;
-  
+
   flex-shrink: 1;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -121,7 +116,7 @@
 }
 .changer {
   display: flex;
-  
+
   justify-content: center;
   align-items: center;
   font-size: 40px;
@@ -146,7 +141,6 @@
 }
 .empter {
   margin: 20px auto 0;
-  
 }
 
 @media (max-width: 968px) {
@@ -171,5 +165,4 @@
     width: 19px;
     height: 19px;
   }
- 
 }

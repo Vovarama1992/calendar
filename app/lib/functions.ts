@@ -13,21 +13,21 @@ export function getDays(year: number, month: number) {
 }
 export async function isDayOff(year: number, month: number, day: number) {
   const formatNumber = (num: number): string => {
-    return num < 10 ? `0${num}` : `${num}`;
-  };
+    return num < 10 ? `0${num}` : `${num}`
+  }
 
-  const formattedMonth = formatNumber(month + 1); // Добавляем 1 к месяцу, так как JavaScript Date месяц начинается с 0
-  const formattedDay = formatNumber(day);
+  const formattedMonth = formatNumber(month + 1) // Добавляем 1 к месяцу, так как JavaScript Date месяц начинается с 0
+  const formattedDay = formatNumber(day)
 
-  const date = `${year}-${formattedMonth}-${formattedDay}`;
+  const date = `${year}-${formattedMonth}-${formattedDay}`
   try {
-    const response = await fetch(`https://isdayoff.ru/${date}`);
-    
-    const json = await response.json();
-    return json == 1;
+    const response = await fetch(`https://isdayoff.ru/${date}`)
+
+    const json = await response.json()
+    return json == 1
   } catch (error) {
-    console.error('Ошибка при выполнении запроса к isDayOff API:', error);
-    return false;
+    console.error('Ошибка при выполнении запроса к isDayOff API:', error)
+    return false
   }
 }
 
