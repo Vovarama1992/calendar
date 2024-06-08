@@ -1,3 +1,6 @@
+
+При клике на неделю(подсвечивается золотым) выпадает недельный список. он первоначально формируется из дневных, но потом уже самостоятельным становится
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
