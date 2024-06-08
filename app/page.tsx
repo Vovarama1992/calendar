@@ -61,7 +61,7 @@ export default function Home() {
     for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
       const dayNumber = weekIndex * 7 + dayIndex + 2 - shift;
       if (dayNumber >= 1 && dayNumber <= days.length) {
-        const dayTasks = JSON.parse(localStorage.getItem(`todo_${year}_${month}_${dayNumber}`) || '[]');
+        const dayTasks = JSON.parse(localStorage.getItem(`todo_${year}_${month}_${dayNumber}_${uName}`) || '[]');
         tasks.push(...dayTasks);
       }
     }
