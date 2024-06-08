@@ -24,7 +24,7 @@ export const daysOfWeek = [
 
 export type Todo = {
   completed: boolean
-  id: number
+  id: number 
   text: string
 }
 export type ActionType =
@@ -36,7 +36,7 @@ export type ActionType =
 export type TodoProps = {
   day: number
   month: number
-  open: boolean
   year: number
   close: () => void
 }
+export type WeekProps = Omit<TodoProps, 'day'> & { tasks: Todo[], index: number };

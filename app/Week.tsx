@@ -1,35 +1,48 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useReducer, useEffect } from 'react';
+import { todoReducer,  saveTasksToLocalStorage, loadTasksFromLocalStorage} from './lib/functions';
+import { months } from './lib/defs';
+import { WeekProps, Todo } from './lib/defs';
+import styles from './page.module.css';
 import Image from 'next/image'
-import { todoReducer } from './lib/functions'
-import { Todo, TodoProps } from './lib/defs'
-import styles from './page.module.css'
-const changeInput = { width: '300px' }
-const changer = { width: 'auto', height: '20px', marginLeft: '5px', background: 'transparent' }
+const changeInput = { width: '300px' };
+const changer = { width: 'auto', height: '20px', border: 'none', marginLeft: '5px', background: 'transparent' };
+function monthNamer(num: number) {
+    const goal = months.find((month) => month.value == num);
+    if (goal) {
+        return goal.name
+    } else return
+}
+function uniquer(tasks: Todo[]) {
+    return tasks.map((task, index) => ({
+    ...task,
+    id: Math.random()
+  }));
+}
 
-export default function TodoListModal({ day, month, year, close }: TodoProps) {
-    const localStorageKey = `todo_${year}_${month}_${day}`
-  const [nextId, setNext] = useState(0)
-  const [input, turnInput] = useState(false)
-  const [selectedId, setSelect] = useState<number | null>(null)
-  const [todos, dispatch] = useReducer(todoReducer, [], initTodos)
-  const [name, setName] = useState<string | null>(null);
- 
-  
-  
-  
-  
-  function initTodos() {
-    const storedTodos = localStorage.getItem(localStorageKey)
-    return storedTodos ? JSON.parse(storedTodos) : []
-  }
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(todos))
-  }, [todos])
 
+export default function Weeklist({ year, month, tasks, close, index }: WeekProps) {
+    function initialTasksWithUniqueIds(year: number, month: number, index: number) {
+        const storedTasks = loadTasksFromLocalStorage(year, month, index);
+        const uniqueTasks = uniquer(tasks);
+        return storedTasks.length > 0 ? storedTasks : uniqueTasks;
+      };
+      const [todos, dispatch] = useReducer(todoReducer, initialTasksWithUniqueIds(year, month, index));
+  const [input, turnInput] = useState(false);
+  const [selectedId, setSelect] = useState<number | null>(null);
+  const [nextId, setNext] = useState(0);
+  const monthName = monthNamer(month);
+  
+  
   useEffect(() => {
-    const maxId = todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) : 0
-    setNext(maxId + 1)
-  }, [])
+    const maxId = todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) : 0;
+    setNext(maxId + 1);
+  }, []);
+  useEffect(() => {
+    
+    saveTasksToLocalStorage(year, month, index, todos);
+  }, [todos]);
+
+  
 
   function addTodo(text: string) {
     dispatch({
@@ -58,39 +71,39 @@ export default function TodoListModal({ day, month, year, close }: TodoProps) {
       content: text,
     })
   }
-
   function onTurn(id: number | null) {
-    turnInput(true)
-    setSelect(id)
+    turnInput(true);
+    setSelect(id);
   }
 
   const handleAddSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const newTodoText = formData.get('newtodo') as string
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const newTodoText = formData.get('newtodo') as string;
     if (!newTodoText) {
-      alert('type something')
+      alert('Type something');
     }
     if (newTodoText.trim()) {
-      addTodo(newTodoText)
-      e.currentTarget.reset()
+      addTodo(newTodoText);
+      e.currentTarget.reset();
     }
-  }
+  };
+
   const handleChangeSubmit = (e: React.FormEvent<HTMLFormElement>, id: number) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const newTodoText = formData.get('newvalue') as string
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const newTodoText = formData.get('newvalue') as string;
     if (newTodoText.trim()) {
-      changeTodo(id, newTodoText)
-      e.currentTarget.reset()
+      changeTodo(id, newTodoText);
+      e.currentTarget.reset();
     }
-    turnInput(false)
-  }
+    turnInput(false);
+  };
 
   return (
-    <div className={styles.todo} >
+    <div className={styles.todo}>
       <h2>
-        TodoList for {day}.{month + 1}.{year}
+        TodoList for {index} week of {monthName}
       </h2>
       <div className={styles.todoContent}>
         <form className={styles.form} onSubmit={handleAddSubmit}>
@@ -116,7 +129,9 @@ export default function TodoListModal({ day, month, year, close }: TodoProps) {
                   type="text"
                   name="newvalue"
                 />
-                <button style={{height: '40px', width: 'auto', marginLeft: '10px'}} type='submit'>Ok</button>
+                <button style={{ height: '40px', width: 'auto', marginLeft: '10px' }} type="submit">
+                  Ok
+                </button>
               </form>
             ) : (
               <>
@@ -138,7 +153,6 @@ export default function TodoListModal({ day, month, year, close }: TodoProps) {
           </div>
         ))}
       </div>
-
       <button
         className={styles.closer}
         style={{ width: '42px', height: '42px', borderRadius: '6px' }}
@@ -147,5 +161,5 @@ export default function TodoListModal({ day, month, year, close }: TodoProps) {
         X
       </button>
     </div>
-  )
+  );
 }

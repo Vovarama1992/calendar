@@ -59,3 +59,13 @@ export function todoReducer(todos: Todo[], action: ActionType): Todo[] {
     }
   }
 }
+
+export function saveTasksToLocalStorage(year: number, month: number, weekIndex: number, todos: Todo[]) {
+  const storageKey = `tasks_${year}_${month}_${weekIndex}`;
+  localStorage.setItem(storageKey, JSON.stringify(todos));
+}
+export function loadTasksFromLocalStorage(year: number, month: number, weekIndex: number): Todo[] {
+  const storageKey = `tasks_${year}_${month}_${weekIndex}`;
+  const storedTasks = localStorage.getItem(storageKey);
+  return storedTasks ? JSON.parse(storedTasks) : [];
+}

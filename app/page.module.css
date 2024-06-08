@@ -30,6 +30,7 @@
 
 .td {
   text-align: center;
+  border: none;
 }
 .td button {
   border: 1px solid rgb(184, 184, 53);
@@ -44,17 +45,16 @@
 
 .todo {
   position: absolute;
+  padding: 20px;
   width: 50%;
-  height: 90%;
   left: 35%;
   top: 2%;
   z-index: 9999;
-  height: auto;
   background: rgb(184, 184, 53);
   border: 1px solid rgb(184, 184, 53);
   overflow: hidden;
   border-radius: 15px;
-  min-height: 80%;
+  min-height: 50vh;
 }
 
 .closer {
@@ -89,6 +89,15 @@
   align-items: center;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+.week {
+  position: relative;
+  border-radius: 10px;
+}
+
+.week:hover {
+  background: rgb(184, 184, 53);
+  
 }
 .todoItem label {
   width: 77%;
@@ -165,5 +174,10 @@
   .closer {
     width: 19px;
     height: 19px;
+  }
+  .calendar button {
+    width: 50px;
+    height: 50px;
+   
   }
 }
