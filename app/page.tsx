@@ -44,8 +44,10 @@ export default function Home() {
   const onHover = {background: 'rgb(184, 184, 53)'};
 
   function weekHover(weekIndex: number) {
-           setSelectedWeek(weekIndex);
+           if (!open && !openWeek) {
+            setSelectedWeek(weekIndex);
            setHover(true);
+           }
   }
   
   function openModal(e: React.MouseEvent<HTMLButtonElement>, day: number) {

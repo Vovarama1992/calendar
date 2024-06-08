@@ -56,14 +56,19 @@
   border-radius: 15px;
   min-height: 50vh;
 }
+.todo input {
+  outline: none;
+  border: none;
+}
 
 .closer {
   position: absolute;
   font-size: 15px;
   color: rgb(184, 184, 53);
   right: -1px;
-  top: -1px;
+  top: -2px;
   background: white;
+  border: none;
 }
 .form {
   margin: 14px auto;
@@ -123,7 +128,7 @@
 }
 .changer {
   display: flex;
-
+  border: none;
   justify-content: center;
   align-items: center;
   font-size: 40px;
