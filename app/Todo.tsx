@@ -7,8 +7,9 @@ import styles from './page.module.css'
 const changeInput = { width: '300px' }
 const changer = { width: 'auto', height: '20px', marginLeft: '5px', background: 'transparent' }
 
-export default function TodoListModal({ day, month, year, username, close }: TodoProps) {
+export default function TodoListModal({ day, month, year, index, username, close }: TodoProps) {
     const localStorageKey = `todo_${year}_${month}_${day}_${username}`
+    const weekStorageKey = `tasks_${year}_${month}_${index}_${username}`
   const [nextId, setNext] = useState(0)
   const [input, turnInput] = useState(false)
   const [selectedId, setSelect] = useState<number | null>(null)
@@ -25,6 +26,14 @@ export default function TodoListModal({ day, month, year, username, close }: Tod
   }
   useEffect(() => {
     localStorage.setItem(localStorageKey, JSON.stringify(todos))
+    console.log('local: ' + localStorageKey)
+
+  }, [todos])
+  
+  useEffect(() => {
+     localStorage.setItem(weekStorageKey, JSON.stringify(todos))
+     console.log('week: ' + weekStorageKey)
+
   }, [todos])
 
   useEffect(() => {

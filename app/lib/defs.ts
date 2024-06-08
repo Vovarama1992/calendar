@@ -36,8 +36,9 @@ export type ActionType =
 export type TodoProps = {
   day: number
   month: number
+  index: number
   username: string
   year: number
   close: () => void
 }
-export type WeekProps = Omit<TodoProps, 'day'> & { tasks: Todo[], index: number };
+export type WeekProps = Omit<TodoProps, 'day'> & { tasks: Todo[] };

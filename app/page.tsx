@@ -136,6 +136,7 @@ export default function Home() {
                             username={uName}
                               close={() => setOpen(false)}
                               day={day}
+                              index={selectedWeek}
                               month={month}
                               year={year}
                             />
@@ -154,7 +155,7 @@ export default function Home() {
           month={month}
           tasks={weekTasks}
           close={() => setOpenWeek(false)}
-          index={selectedWeek}
+          index={selectedWeek - 1}
         />
       )}
     </main>

@@ -21,12 +21,16 @@ function uniquer(tasks: Todo[]) {
 
 
 export default function Weeklist({ year, month, tasks, close, username, index }: WeekProps) {
-    function initialTasksWithUniqueIds() {
-        const storedTasks = loadTasksFromLocalStorage(year, month, index, username);
-        const uniqueTasks = uniquer(tasks);
-        return storedTasks.length > 0 ? storedTasks : uniqueTasks;
-      };
-      const [todos, dispatch] = useReducer(todoReducer, initialTasksWithUniqueIds());
+    
+      function initTodos() {
+        const storageKey = `tasks_${year}_${month}_${index}_${username}`;
+        const storedTodos = localStorage.getItem(storageKey);
+        const uniqTodos = storedTodos ? JSON.parse(storedTodos) : uniquer(tasks);
+        console.log('week: ' + storageKey);
+        return uniqTodos;
+        
+      }
+      const [todos, dispatch] = useReducer(todoReducer, [], initTodos);
   const [input, turnInput] = useState(false);
   const [selectedId, setSelect] = useState<number | null>(null);
   const [nextId, setNext] = useState(0);
