@@ -44,11 +44,11 @@
 }
 
 .todo {
-  position: absolute;
+  position: fixed;
   padding: 20px;
   width: 50%;
-  left: 35%;
-  top: 2%;
+  left: 25%;
+  top: 5%;
   z-index: 9999;
   background: rgb(184, 184, 53);
   border: 1px solid rgb(184, 184, 53);
@@ -95,10 +95,7 @@
   border-radius: 10px;
 }
 
-.week:hover {
-  background: rgb(184, 184, 53);
-  
-}
+
 .todoItem label {
   width: 77%;
   height: auto;

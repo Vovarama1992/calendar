@@ -7,11 +7,14 @@ import { getDays, isDayOff } from './lib/functions'
 import { months, daysOfWeek } from './lib/defs'
 import TodoListModal from './Todo'
 
+
+
 export default function Home() {
   const [year, setYear] = useState(2024)
   const [uName, setName] = useState('');
   const [month, setMonth] = useState(5)
   const [open, setOpen] = useState(false)
+  const [hover, setHover] = useState(false);
   const [day, setDay] = useState(1)
   const [holidays, setHolidays] = useState<number[]>([])
   const [weekTasks, setWeekTasks] = useState<Todo[]>([]);
@@ -20,7 +23,7 @@ export default function Home() {
   const days = getDays(year, month)
   useEffect(() => {
     const your_name = prompt("Enter your name") || 'User';
-    setName(your_name);
+    setName(your_name.toUpperCase());
   }, []
   )
   useEffect(() => {
@@ -34,10 +37,17 @@ export default function Home() {
   }, [year, month, days])
   const shift = days[0].dayOfWeek
   const hideForModal: React.CSSProperties = {
-    opacity: open ? '0' : '1',
+    opacity: open || openWeek ? '0' : '1',
     pointerEvents: open ? 'none' : 'auto',
     transition: 'opacity 0.3s ease',
   };
+  const onHover = {background: 'rgb(184, 184, 53)'};
+
+  function weekHover(weekIndex: number) {
+           setSelectedWeek(weekIndex);
+           setHover(true);
+  }
+  
   function openModal(e: React.MouseEvent<HTMLButtonElement>, day: number) {
     setOpen(true);
     setDay(day);
@@ -93,7 +103,8 @@ export default function Home() {
           {Array(Math.ceil((days.length + shift) / 7))
             .fill(null)
             .map((_, weekIndex) => (
-              <tr className={styles.week} onClick={(e) => {
+              <tr className={styles.week} onMouseOver={() => weekHover(weekIndex)} 
+              onMouseOut={() => setHover(false)} style={hover && weekIndex == selectedWeek ? onHover : {}} onClick={(e) => {
                 openWeekModal(weekIndex)
                 e.stopPropagation();
               }} key={weekIndex}>

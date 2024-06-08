@@ -1,4 +1,5 @@
 import React, { useState, useReducer, useEffect } from 'react'
+import { formatNumber } from './lib/functions'
 import Image from 'next/image'
 import { todoReducer } from './lib/functions'
 import { Todo, TodoProps } from './lib/defs'
@@ -90,7 +91,7 @@ export default function TodoListModal({ day, month, year, username, close }: Tod
   return (
     <div className={styles.todo} >
       <h2>
-        TodoList for {day}.{month + 1}.{year}
+        TodoList for {formatNumber(day)}.{formatNumber(month + 1)}.{year}
       </h2>
       <div className={styles.todoContent}>
         <form className={styles.form} onSubmit={handleAddSubmit}>

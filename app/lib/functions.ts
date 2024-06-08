@@ -11,10 +11,13 @@ export function getDays(year: number, month: number) {
 
   return days
 }
+
+export function formatNumber(num: number): string {
+  return num < 10 ? `0${num}` : `${num}`
+}
+
 export async function isDayOff(year: number, month: number, day: number) {
-  const formatNumber = (num: number): string => {
-    return num < 10 ? `0${num}` : `${num}`
-  }
+  
 
   const formattedMonth = formatNumber(month + 1) 
   const formattedDay = formatNumber(day)
