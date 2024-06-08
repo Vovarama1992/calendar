@@ -1,4 +1,5 @@
 import React, { useState, useReducer, useEffect } from 'react'
+import { loadTasksFromLocalStorage,  mergeDayAndWeekTasks} from  './lib/functions';
 import { formatNumber } from './lib/functions'
 import Image from 'next/image'
 import { todoReducer } from './lib/functions'
@@ -8,14 +9,14 @@ const changeInput = { width: '300px' }
 const changer = { width: 'auto', height: '20px', marginLeft: '5px', background: 'transparent' }
 
 export default function TodoListModal({ day, month, year, index, username, close }: TodoProps) {
+  const startid = Math.random();
     const localStorageKey = `todo_${year}_${month}_${day}_${username}`
     const weekStorageKey = `tasks_${year}_${month}_${index}_${username}`
-  const [nextId, setNext] = useState(0)
   const [input, turnInput] = useState(false)
   const [selectedId, setSelect] = useState<number | null>(null)
   const [todos, dispatch] = useReducer(todoReducer, [], initTodos)
   const [name, setName] = useState<string | null>(null);
- 
+  const [nextId, setNext] = useState(startid);
   
   
   
@@ -31,23 +32,27 @@ export default function TodoListModal({ day, month, year, index, username, close
   }, [todos])
   
   useEffect(() => {
-     localStorage.setItem(weekStorageKey, JSON.stringify(todos))
-     console.log('week: ' + weekStorageKey)
+    const weekTasks = loadTasksFromLocalStorage(year, month, index, username);
+    console.log(weekTasks);
+    const updatedWeekTasks = mergeDayAndWeekTasks(weekTasks, todos);
+    
+    localStorage.setItem(weekStorageKey , JSON.stringify(updatedWeekTasks))
 
   }, [todos])
 
-  useEffect(() => {
-    const maxId = todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) : 0
-    setNext(maxId + 1)
-  }, [])
+  
 
-  function addTodo(text: string) {
+  function addTodo(text: string, id: number) {
+    const random = Math.random();
+    setNext(random);
     dispatch({
       type: 'added',
       content: text,
-      id: nextId + 1,
+      id: id
     })
-    setNext(nextId + 1)
+    
+    
+    
   }
   function completeTodo(id: number) {
     dispatch({
@@ -82,7 +87,7 @@ export default function TodoListModal({ day, month, year, index, username, close
       alert('type something')
     }
     if (newTodoText.trim()) {
-      addTodo(newTodoText)
+      addTodo(newTodoText, nextId)
       e.currentTarget.reset()
     }
   }

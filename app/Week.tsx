@@ -33,14 +33,11 @@ export default function Weeklist({ year, month, tasks, close, username, index }:
       const [todos, dispatch] = useReducer(todoReducer, [], initTodos);
   const [input, turnInput] = useState(false);
   const [selectedId, setSelect] = useState<number | null>(null);
-  const [nextId, setNext] = useState(0);
+  
   const monthName = monthNamer(month);
   
   
-  useEffect(() => {
-    const maxId = todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) : 0;
-    setNext(maxId + 1);
-  }, []);
+  
   useEffect(() => {
     
     saveTasksToLocalStorage(year, month, index, username, todos);
@@ -52,9 +49,9 @@ export default function Weeklist({ year, month, tasks, close, username, index }:
     dispatch({
       type: 'added',
       content: text,
-      id: nextId + 1,
+      id: Math.random()
     })
-    setNext(nextId + 1)
+    
   }
   function completeTodo(id: number) {
     dispatch({
@@ -107,7 +104,7 @@ export default function Weeklist({ year, month, tasks, close, username, index }:
   return (
     <div className={styles.todo}>
       <h2>
-        TodoList for {index} week of {monthName}
+        TodoList for {index + 1} week of {monthName}
       </h2>
       <div className={styles.todoContent}>
         <form className={styles.form} onSubmit={handleAddSubmit}>

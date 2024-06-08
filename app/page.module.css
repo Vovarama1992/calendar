@@ -29,11 +29,23 @@
 }
 
 .td {
+  position: relative;
   text-align: center;
   border: none;
 }
 .td button {
   border: 1px solid rgb(184, 184, 53);
+}
+
+.arrow {
+  position: absolute;
+  left: 1%;
+  width: 30px;
+  height: 30px;
+  top: 35%;
+  border: none;
+  background: transparent;
+  font-size: 35px;
 }
 
 .selector select {
@@ -156,6 +168,9 @@
 }
 
 @media (max-width: 968px) {
+  .container {
+    padding-left: 10px;
+  }
   .selector select {
     width: 20%;
   }
@@ -181,5 +196,10 @@
     width: 50px;
     height: 50px;
    
+  }
+  .arrow {
+    left: -30%;
+    top: 31%;
+    font-size: 18px;
   }
 }

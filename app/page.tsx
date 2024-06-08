@@ -7,7 +7,7 @@ import { getDays, isDayOff } from './lib/functions'
 import { months, daysOfWeek } from './lib/defs'
 import TodoListModal from './Todo'
 
-
+const arrow = {width: '30px', height: '30px', border: 'none'}
 
 export default function Home() {
   const [year, setYear] = useState(2024)
@@ -106,10 +106,8 @@ export default function Home() {
             .fill(null)
             .map((_, weekIndex) => (
               <tr className={styles.week} onMouseOver={() => weekHover(weekIndex)} 
-              onMouseOut={() => setHover(false)} style={hover && weekIndex == selectedWeek ? onHover : {}} onClick={(e) => {
-                openWeekModal(weekIndex)
-                e.stopPropagation();
-              }} key={weekIndex}>
+              onMouseOut={() => setHover(false)} style={hover && weekIndex == selectedWeek ? onHover : {}} 
+               key={weekIndex}>
                 {Array(7)
                   .fill(null)
                   .map((_, dayIndex) => {
@@ -119,6 +117,7 @@ export default function Home() {
                     } else {
                       return (
                         <td className={styles.td} key={dayIndex}>
+                          {dayIndex % 7 == 0 && <button style={arrow} onClick={() => openWeekModal(weekIndex)} className={styles.arrow}>&gt;</button>}
                           <button
                             style={hideForModal}
                             className={styles.todoButton}

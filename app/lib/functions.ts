@@ -40,7 +40,7 @@ export function todoReducer(todos: Todo[], action: ActionType): Todo[] {
       return [
         ...todos,
         {
-          id: todos.length,
+          id: action.id,
           text: action.content,
           completed: false,
         },
@@ -71,4 +71,22 @@ export function loadTasksFromLocalStorage(year: number, month: number, weekIndex
   const storageKey = `tasks_${year}_${month}_${weekIndex}_${username}`;
   const storedTasks = localStorage.getItem(storageKey);
   return storedTasks ? JSON.parse(storedTasks) : [];
+}
+export function mergeDayAndWeekTasks(weekTasks: Todo[], dayTasks: Todo[]): Todo[] {
+  function identer(dayTasks: Todo[], id: number) {
+    let res = false;
+        for (const day of dayTasks) {
+          if (day.id == id) {
+            res = true;
+          } 
+        }
+        return res;
+  }
+  const filteredWeekTasks = weekTasks.filter(
+    weekTask => !identer(dayTasks, weekTask.id)
+  );
+  console.log('week: ' + filteredWeekTasks.length);
+
+  
+  return [...filteredWeekTasks, ...dayTasks];
 }
