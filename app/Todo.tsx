@@ -6,8 +6,8 @@ import styles from './page.module.css'
 const changeInput = { width: '300px' }
 const changer = { width: 'auto', height: '20px', marginLeft: '5px', background: 'transparent' }
 
-export default function TodoListModal({ day, month, year, close }: TodoProps) {
-    const localStorageKey = `todo_${year}_${month}_${day}`
+export default function TodoListModal({ day, month, year, username, close }: TodoProps) {
+    const localStorageKey = `todo_${year}_${month}_${day}_${username}`
   const [nextId, setNext] = useState(0)
   const [input, turnInput] = useState(false)
   const [selectedId, setSelect] = useState<number | null>(null)

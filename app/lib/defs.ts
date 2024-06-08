@@ -36,6 +36,7 @@ export type ActionType =
 export type TodoProps = {
   day: number
   month: number
+  username: string
   year: number
   close: () => void
 }

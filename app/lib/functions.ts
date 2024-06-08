@@ -60,12 +60,12 @@ export function todoReducer(todos: Todo[], action: ActionType): Todo[] {
   }
 }
 
-export function saveTasksToLocalStorage(year: number, month: number, weekIndex: number, todos: Todo[]) {
-  const storageKey = `tasks_${year}_${month}_${weekIndex}`;
+export function saveTasksToLocalStorage(year: number, month: number, weekIndex: number, username: string, todos: Todo[]) {
+  const storageKey = `tasks_${year}_${month}_${weekIndex}_${username}`;
   localStorage.setItem(storageKey, JSON.stringify(todos));
 }
-export function loadTasksFromLocalStorage(year: number, month: number, weekIndex: number): Todo[] {
-  const storageKey = `tasks_${year}_${month}_${weekIndex}`;
+export function loadTasksFromLocalStorage(year: number, month: number, weekIndex: number, username: string,): Todo[] {
+  const storageKey = `tasks_${year}_${month}_${weekIndex}_${username}`;
   const storedTasks = localStorage.getItem(storageKey);
   return storedTasks ? JSON.parse(storedTasks) : [];
 }

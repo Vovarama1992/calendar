@@ -20,13 +20,13 @@ function uniquer(tasks: Todo[]) {
 }
 
 
-export default function Weeklist({ year, month, tasks, close, index }: WeekProps) {
-    function initialTasksWithUniqueIds(year: number, month: number, index: number) {
-        const storedTasks = loadTasksFromLocalStorage(year, month, index);
+export default function Weeklist({ year, month, tasks, close, username, index }: WeekProps) {
+    function initialTasksWithUniqueIds() {
+        const storedTasks = loadTasksFromLocalStorage(year, month, index, username);
         const uniqueTasks = uniquer(tasks);
         return storedTasks.length > 0 ? storedTasks : uniqueTasks;
       };
-      const [todos, dispatch] = useReducer(todoReducer, initialTasksWithUniqueIds(year, month, index));
+      const [todos, dispatch] = useReducer(todoReducer, initialTasksWithUniqueIds());
   const [input, turnInput] = useState(false);
   const [selectedId, setSelect] = useState<number | null>(null);
   const [nextId, setNext] = useState(0);
@@ -39,7 +39,7 @@ export default function Weeklist({ year, month, tasks, close, index }: WeekProps
   }, []);
   useEffect(() => {
     
-    saveTasksToLocalStorage(year, month, index, todos);
+    saveTasksToLocalStorage(year, month, index, username, todos);
   }, [todos]);
 
   

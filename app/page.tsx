@@ -9,6 +9,7 @@ import TodoListModal from './Todo'
 
 export default function Home() {
   const [year, setYear] = useState(2024)
+  const [uName, setName] = useState('');
   const [month, setMonth] = useState(5)
   const [open, setOpen] = useState(false)
   const [day, setDay] = useState(1)
@@ -17,6 +18,11 @@ export default function Home() {
   const [openWeek, setOpenWeek] = useState(false);
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
   const days = getDays(year, month)
+  useEffect(() => {
+    const your_name = prompt("Enter your name") || 'User';
+    setName(your_name);
+  }, []
+  )
   useEffect(() => {
     const fetchHolidays = async () => {
       const promises = days.map(dayObj => isDayOff(year, month, dayObj.date))
@@ -114,6 +120,7 @@ export default function Home() {
                           </button>
                           {open && day === dayNumber && (
                             <TodoListModal
+                            username={uName}
                               close={() => setOpen(false)}
                               day={day}
                               month={month}
@@ -129,7 +136,7 @@ export default function Home() {
         </tbody>
       </table>
       {openWeek && (
-        <Weeklist
+        <Weeklist  username={uName}
           year={year}
           month={month}
           tasks={weekTasks}
