@@ -46,6 +46,7 @@
   border: none;
   background: transparent;
   font-size: 35px;
+  color: rgb(120, 72, 164);
 }
 
 .selector select {
@@ -201,5 +202,7 @@
     left: -30%;
     top: 31%;
     font-size: 18px;
+    
   }
 }
+

@@ -18,7 +18,7 @@ function uniquer(tasks: Todo[]) {
     id: Math.random()
   }));
 }
-
+const weekStyle = {background: 'rgb(64, 24, 101)'}
 
 export default function Weeklist({ year, month, tasks, close, username, index }: WeekProps) {
     
@@ -102,7 +102,7 @@ export default function Weeklist({ year, month, tasks, close, username, index }:
   };
 
   return (
-    <div className={styles.todo}>
+    <div className={styles.todo} style={weekStyle}>
       <h2>
         TodoList for {index + 1} week of {monthName}
       </h2>
