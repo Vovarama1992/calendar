@@ -28,7 +28,7 @@ export default function Home() {
   )
   useEffect(() => {
     const fetchHolidays = async () => {
-      const promises = days.map(dayObj => isDayOff(year, month, dayObj.date))
+      const promises = days.map(dayObj => isDayOff(year, month - 1, dayObj.date))
       const results = await Promise.all(promises)
       const newHolidays = days.filter((dayObj, index) => results[index])
       setHolidays(newHolidays.map(dayObj => dayObj.date))
