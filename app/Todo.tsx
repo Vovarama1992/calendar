@@ -22,8 +22,25 @@ export default function TodoListModal({ day, month, year, index, username, close
   
   
   function initTodos() {
-    const storedTodos = localStorage.getItem(localStorageKey)
-    return storedTodos ? JSON.parse(storedTodos) : []
+    const localStorageKey = `todo_${year}_${month}_${day}_${username}`
+    const weekStorageKey = `tasks_${year}_${month}_${index}_${username}`
+  
+    const storedTodos = localStorage.getItem(localStorageKey);
+    const storedWeekTodos = localStorage.getItem(weekStorageKey);
+  
+    let dailyTodos = storedTodos ? JSON.parse(storedTodos) : [];
+    const weeklyTodos = storedWeekTodos ? JSON.parse(storedWeekTodos) : [];
+  
+    
+    const weeklyTodoIds = new Set(weeklyTodos.map((todo: Todo) => todo.id));
+  
+    
+    dailyTodos = dailyTodos.filter((todo: Todo) => weeklyTodoIds.has(todo.id));
+  
+    
+    localStorage.setItem(localStorageKey, JSON.stringify(dailyTodos));
+  
+    return dailyTodos;
   }
   useEffect(() => {
     localStorage.setItem(localStorageKey, JSON.stringify(todos))
