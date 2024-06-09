@@ -1,15 +1,17 @@
 import { Todo, ActionType } from './defs'
 export function getDays(year: number, month: number) {
-  const startDate = new Date(year, month, 1)
-  const endDate = new Date(year, month + 1, 0)
-  const days = []
+  const daysOfWeek = [7, 1, 2, 3, 4, 5, 6]; 
+  const date = new Date(year, month - 1, 1); 
+  const daysInMonth = new Date(year, month, 0).getDate(); 
+  const result = [];
 
-  for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
-    const dayOfWeek = date.getDay()
-    days.push({ date: date.getDate(), dayOfWeek: dayOfWeek })
+  for (let day = 1; day <= daysInMonth; day++) {
+    date.setDate(day);
+    const dayOfWeek = daysOfWeek[date.getDay()]; 
+    result.push({ date: day, dayOfWeek: dayOfWeek });
   }
 
-  return days
+  return result;
 }
 
 export function formatNumber(num: number): string {

@@ -7,7 +7,7 @@ import { getDays, isDayOff } from './lib/functions'
 import { months, daysOfWeek } from './lib/defs'
 import TodoListModal from './Todo'
 
-const arrow = {width: '30px', height: '30px', border: 'none'}
+const arrow = {width: '30px', height: '100%', border: 'none'}
 
 export default function Home() {
   const [year, setYear] = useState(2024)
@@ -35,7 +35,7 @@ export default function Home() {
     }
     fetchHolidays()
   }, [year, month, days])
-  const shift = days[0].dayOfWeek
+  const shift = days[0].dayOfWeek - 1;
   const hideForModal: React.CSSProperties = {
     opacity: open || openWeek ? '0' : '1',
     pointerEvents: open ? 'none' : 'auto',
@@ -59,7 +59,7 @@ export default function Home() {
     if (!open) {
       const tasks: Todo[] = [];
     for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-      const dayNumber = weekIndex * 7 + dayIndex + 2 - shift;
+      const dayNumber = weekIndex * 7 + dayIndex  - shift;
       if (dayNumber >= 1 && dayNumber <= days.length) {
         const dayTasks = JSON.parse(localStorage.getItem(`todo_${year}_${month}_${dayNumber}_${uName}`) || '[]');
         tasks.push(...dayTasks);
@@ -75,88 +75,112 @@ export default function Home() {
   const dayOff = { color: 'red' }
   return (
     <main className={styles.container}>
-      <div className={styles.selector} style={hideForModal}>
-        <select name="year" value={year} onChange={e => setYear(Number(e.target.value))}>
-          <option value={2024}>2024</option>
-          <option value={2025}>2025</option>
-        </select>
-        <select
-          name="month"
-          value={month}
-          style={hideForModal}
-          onChange={e => setMonth(Number(e.target.value))}
-        >
-          {months.map(m => (
-            <option key={m.value} value={m.value}>
-              {m.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <table className={styles.calendar}>
-        <thead style={hideForModal}>
-          <tr>
-            {daysOfWeek.map((day, index) => (
-              <th key={index}>{day}</th>
-            ))}
+  <div className={styles.selector} style={hideForModal}>
+    <select name="year" value={year} onChange={e => setYear(Number(e.target.value))}>
+      <option value={2024}>2024</option>
+      <option value={2025}>2025</option>
+    </select>
+    <select
+      name="month"
+      value={month}
+      style={hideForModal}
+      onChange={e => setMonth(Number(e.target.value))}
+    >
+      {months.map(m => (
+        <option key={m.value} value={m.value}>
+          {m.name}
+        </option>
+      ))}
+    </select>
+  </div>
+  <table className={styles.calendar}>
+    <thead style={hideForModal}>
+      <tr>
+        {daysOfWeek.map((day, index) => (
+          <th key={index}>{day}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {Array(Math.ceil((days.length + shift) / 7))
+        .fill(null)
+        .map((_, weekIndex) => (
+          <tr
+            className={styles.week}
+            onMouseOver={() => weekHover(weekIndex)}
+            onMouseOut={() => setHover(false)}
+            style={hover && weekIndex === selectedWeek ? onHover : {}}
+            key={weekIndex}
+          >
+            {Array(7)
+              .fill(null)
+              .map((_, dayIndex) => {
+                const dayNumber = weekIndex * 7 + dayIndex - shift + 1;
+                if (dayNumber < 1 || dayNumber > days.length) {
+                  return (
+                    <td className={styles.td} style={hideForModal} key={dayIndex}>
+                      {dayIndex === 0 && (
+                        <button
+                          style={arrow}
+                          onClick={() => openWeekModal(weekIndex)}
+                          className={styles.arrow}
+                        >
+                          &gt;
+                        </button>
+                      )}
+                    </td>
+                  );
+                } else {
+                  return (
+                    <td className={styles.td} key={dayIndex}>
+                      {dayIndex % 7 === 0 && (
+                        <button
+                          style={arrow}
+                          onClick={() => openWeekModal(weekIndex)}
+                          className={styles.arrow}
+                        >
+                          &gt;
+                        </button>
+                      )}
+                      <button
+                        style={hideForModal}
+                        className={styles.todoButton}
+                        onClick={(e) => {
+                          openModal(e, dayNumber);
+                        }}
+                      >
+                        <span style={holidays.includes(dayNumber) ? dayOff : {}}>
+                          {dayNumber}
+                        </span>
+                      </button>
+                      {open && day === dayNumber && (
+                        <TodoListModal
+                          username={uName}
+                          close={() => setOpen(false)}
+                          day={day}
+                          index={selectedWeek}
+                          month={month}
+                          year={year}
+                        />
+                      )}
+                    </td>
+                  );
+                }
+              })}
           </tr>
-        </thead>
-        <tbody>
-          {Array(Math.ceil((days.length + shift) / 7))
-            .fill(null)
-            .map((_, weekIndex) => (
-              <tr className={styles.week} onMouseOver={() => weekHover(weekIndex)} 
-              onMouseOut={() => setHover(false)} style={hover && weekIndex == selectedWeek ? onHover : {}} 
-               key={weekIndex}>
-                {Array(7)
-                  .fill(null)
-                  .map((_, dayIndex) => {
-                    const dayNumber = weekIndex * 7 + dayIndex + 2 - shift;
-                    if (dayNumber < 1 || dayNumber > days.length) {
-                      return <td className={styles.td} style={hideForModal} key={dayIndex}></td>;
-                    } else {
-                      return (
-                        <td className={styles.td} key={dayIndex}>
-                          {dayIndex % 7 == 0 && <button style={arrow} onClick={() => openWeekModal(weekIndex)} className={styles.arrow}>&gt;</button>}
-                          <button
-                            style={hideForModal}
-                            className={styles.todoButton}
-                            onClick={(e) => {
-                              
-                              openModal(e, dayNumber);
-                            }}
-                          >
-                            <span style={holidays.includes(dayNumber) ? dayOff : {}}>
-                              {dayNumber}
-                            </span>
-                          </button>
-                          {open && day === dayNumber && (
-                            <TodoListModal
-                            username={uName}
-                              close={() => setOpen(false)}
-                              day={day}
-                              index={selectedWeek}
-                              month={month}
-                              year={year}
-                            />
-                          )}
-                        </td>
-                      );
-                    }
-                  })}
-              </tr>
-            ))}
-        </tbody>
-      </table>
-      {openWeek && (
-        <Weeklist  username={uName}
-          year={year}
-          month={month}
-          tasks={weekTasks}
-          close={() => setOpenWeek(false)}
-          index={selectedWeek - 1}
-        />
-      )}
-    </main>
+        ))}
+    </tbody>
+  </table>
+  {openWeek && (
+    <Weeklist
+      username={uName}
+      year={year}
+      month={month}
+      tasks={weekTasks}
+      close={() => setOpenWeek(false)}
+      index={selectedWeek - 1}
+    />
+  )}
+</main>
   )
 }

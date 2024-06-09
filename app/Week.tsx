@@ -18,7 +18,7 @@ function uniquer(tasks: Todo[]) {
     id: Math.random()
   }));
 }
-const weekStyle = {background: 'rgb(64, 24, 101)'}
+const weekStyle = {background: 'rgb(158, 122, 192)'}
 
 export default function Weeklist({ year, month, tasks, close, username, index }: WeekProps) {
     
