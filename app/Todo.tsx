@@ -105,7 +105,7 @@ export default function TodoListModal({ day, month, year, index, username, close
   return (
     <div className={styles.todo} >
       <h2>
-        TodoList for {formatNumber(day)}.{formatNumber(month + 1)}.{year}
+        TodoList for {formatNumber(day)}.{formatNumber(month)}.{year}
       </h2>
       <div className={styles.todoContent}>
         <form className={styles.form} onSubmit={handleAddSubmit}>
